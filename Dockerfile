@@ -31,6 +31,9 @@ RUN apt-get update && apt-get install -y google-chrome-stable
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
+# COPY scraper2-443707-19ac9e067729.json /app/service-account.json
+# ENV GOOGLE_APPLICATION_CREDENTIALS=/app/service-account.json
+
 # Copy the application code into the container
 COPY . .
 
