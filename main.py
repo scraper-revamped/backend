@@ -7,11 +7,9 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def run_scraper():
     # Run the scraper
-    try:
-        setup_search("الاتصالات وتقنية المعلومات")
-        return "Scraping completed successfully.", 200
-    except:
-        return "error, scraping incomplete"
+    setup_search("الاتصالات وتقنية المعلومات")
+    return "Scraping completed successfully.", 200
+    
 
 if __name__ == '__main__':
     # Run the Flask app
