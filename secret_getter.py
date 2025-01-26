@@ -33,7 +33,7 @@ def get_service_account_credentials():
     client = secretmanager.SecretManagerServiceClient()
 
     # Secret name and version (update with your project and secret details)
-    secret_name = "projects/scraper2-443707/secrets/rev_sec2/versions/latest"
+    secret_name = "projects/scraper2-443707/secrets/rev_sec2/versions/1"
 
     try:
         # Access the secret

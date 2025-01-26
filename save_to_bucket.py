@@ -10,7 +10,7 @@ def delete_existing_files(bucket_name):
 
     """Delete all files in the specified GCS bucket."""
     creds = get_service_account_credentials()
-    client = storage.Client(credentials=creds)
+    client = storage.Client()
     bucket = client.bucket(bucket_name)
     # List and delete all blobs in the bucket
     blobs = bucket.list_blobs()
@@ -20,7 +20,7 @@ def delete_existing_files(bucket_name):
 
 def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
     creds = get_service_account_credentials()
-    client = storage.Client(credentials=creds)
+    client = storage.Client()
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_filename(source_file_name)
