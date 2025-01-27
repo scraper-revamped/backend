@@ -8,6 +8,9 @@ from xpath import *
 #from utils_consts import *
 import time
 from save_to_bucket import save_to_storage
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
@@ -17,6 +20,7 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("--log-level=1")
 
 def post_process_results(term_tenders):
+    logging.info("post processing results")
     if not term_tenders:
         print("No results found for the specified main activity.")
         return
@@ -52,6 +56,7 @@ def post_process_results(term_tenders):
     return df
 
 def get_tenders_from_page(term_tenders, driver):
+    logging.info("get tenders from page")
     parent_tender_divs = driver.find_element(By.XPATH, '//*[@id="cardsresult"]/div[1]')
     child_tender_divs = parent_tender_divs.find_elements(By.CLASS_NAME, "row")
     links = parent_tender_divs.find_elements(By.XPATH, "//a[contains(text(), 'التفاصيل')]")
@@ -71,6 +76,7 @@ def get_tenders_from_page(term_tenders, driver):
         i += 1
         
 def start_parsing(term_tenders, driver):
+    logging.info("started parsing")
     current_page = 1
     try:
         pages_elements = driver.find_element(By.XPATH, '//*[@id="cardsresult"]/div[2]/div/nav/ul')
@@ -127,6 +133,7 @@ def setup_search(main_activityy):
         website_url = "https://tenders.etimad.sa/Tender/AllTendersForVisitor?PageNumber=1"
         driver.get(website_url)
         print("got etimad website successfully!!!")
+        logging.info("got etimad website successfully!!!")
 
         
         # expand search
