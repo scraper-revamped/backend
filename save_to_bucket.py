@@ -4,19 +4,23 @@ import os
 from secret_getter import get_service_account_credentials
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 def delete_existing_files(bucket_name):
-    """Delete all files in the specified GCS bucket."""
-    # creds = get_service_account_credentials()
-    client = storage.Client()
-    bucket = client.bucket(bucket_name)
-    # List and delete all blobs in the bucket
-    blobs = bucket.list_blobs()
-    for blob in blobs:
-        print(f"Deleting file: {blob.name}")
-        logging.info(f"deleting file ....: {blob.name}")
-        blob.delete()
+    try:
+        logging.info(f"Attempting to delete files in bucket: {bucket_name}")
+        """Delete all files in the specified GCS bucket."""
+        # creds = get_service_account_credentials()
+        client = storage.Client()
+        bucket = client.bucket(bucket_name)
+        # List and delete all blobs in the bucket
+        blobs = bucket.list_blobs()
+        for blob in blobs:
+            print(f"Deleting file: {blob.name}")
+            logging.info(f"deleting file ....: {blob.name}")
+            blob.delete()
+    except Exception as e:
+        logging.error(f"Error deleting files: {e}")
 
 def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
     # creds = get_service_account_credentials()

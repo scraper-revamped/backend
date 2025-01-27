@@ -10,7 +10,7 @@ import time
 from save_to_bucket import save_to_storage
 import logging
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--headless")
