@@ -6,18 +6,17 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-# def delete_existing_files(bucket_name):
-
-#     """Delete all files in the specified GCS bucket."""
-#     # creds = get_service_account_credentials()
-#     client = storage.Client()
-#     bucket = client.bucket(bucket_name)
-#     # List and delete all blobs in the bucket
-#     blobs = bucket.list_blobs()
-#     for blob in blobs:
-#         print(f"Deleting file: {blob.name}")
-#         logging.info(f"deleting file ....: {blob.name}")
-#         blob.delete()
+def delete_existing_files(bucket_name):
+    """Delete all files in the specified GCS bucket."""
+    # creds = get_service_account_credentials()
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    # List and delete all blobs in the bucket
+    blobs = bucket.list_blobs()
+    for blob in blobs:
+        print(f"Deleting file: {blob.name}")
+        logging.info(f"deleting file ....: {blob.name}")
+        blob.delete()
 
 def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
     # creds = get_service_account_credentials()
@@ -33,12 +32,12 @@ def save_to_storage(df, term, username):
     try:
         today_date = pd.to_datetime('today').strftime('%Y-%m-%d-%h')
         file_name = f"tenders_{term}_{today_date}_{username}.xlsx"
-        #f.to_excel(file_name, index=False)
-        #logging.info(f"File saved locally: {file_name}")
+        df.to_excel(file_name, index=False)
+        logging.info(f"File saved locally: {file_name}")
 
         bucket_name = "tenders-excel-files"
         logging.info(f"deleting file ....: {term}/{file_name}")
-        # delete_existing_files(bucket_name)
+        delete_existing_files(bucket_name)
         logging.info(f"file deleted ....: {term}/{file_name}")
         upload_to_gcs(bucket_name, file_name, f"{term}/{file_name}")
         logging.info(f"File uploaded to GCS: {term}/{file_name}")
